@@ -1,10 +1,22 @@
 import { useState } from 'react'
 import './App.css'
 import { Button } from './components/ui/button'
+import axios from "axios";
 
 
 function App() {
   const [click, setClick] = useState<number>(0);
+
+  const animalApi = axios.get("https://dog.ceo/api/breeds/image/random")
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  console.log(animalApi);
+
   return (
     <>
       <div className='flex justify-center items-center h-screen'>
