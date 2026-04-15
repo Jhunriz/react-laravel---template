@@ -1,0 +1,46 @@
+
+import { useState } from 'react';
+import api from '@/app/hooks/tokenHeader';
+import { AxiosError } from 'axios';
+import type { LoginCredentials, LoginResponse, UseLoginReturn } from '@/types/auth';
+import { BASEURL } from '@/config/api';
+
+
+
+export function useLogin(): UseLoginReturn {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+    const [data, setData] = useState<LoginResponse | null>(null);
+
+    const login = async (credentials: LoginCredentials): Promise<LoginResponse | null> => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await api.post<LoginResponse>(`${BASEURL}/login`, credentials);
+            if (response.data.data.token) {
+                localStorage.setItem('token', response.data.data.token);
+                api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+            }
+            setData(response.data);
+            return response.data;
+        } catch (err) {
+            const axiosError = err as AxiosError<any>;
+            const errorMessage = axiosError.response?.data?.message ||
+                axiosError.message ||
+                'Login failed. Please try again.';
+            setError(errorMessage);
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const reset = () => {
+        setLoading(false);
+        setError(null);
+        setData(null);
+    };
+
+    return { login, loading, error, data, reset };
+}
