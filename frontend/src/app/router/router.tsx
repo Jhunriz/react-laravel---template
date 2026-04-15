@@ -8,7 +8,7 @@ import NotFound from "../layout/NotFound";
 
 export const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/dashboard",
         element: (
             <ProtectedRoute>
                 <MainLayout />
