@@ -63,7 +63,7 @@ export default function Login({ onSuccess, ...props }: LoginProps) {
     /* -------------------------- Effects -------------------------- */
 
     useEffect(() => {
-        if (data?.token && onSuccess) {
+        if (data?.data?.token && onSuccess) {
             onSuccess();
         }
     }, [data, onSuccess]);
@@ -197,7 +197,7 @@ export default function Login({ onSuccess, ...props }: LoginProps) {
                             )}
 
                             {/* Success */}
-                            {data?.token && (
+                            {data?.data?.token && (
                                 <Field>
                                     <div className="text-sm text-green-700 bg-green-50 border border-green-200 p-3 rounded-md text-center">
                                         {data.message || "Login successful! Redirecting..."}

@@ -42,8 +42,10 @@ class AuthController extends Controller
                     60 * 24, // 24 hours
                     '/',
                     null,
-                    true,  // secure (HTTPS only)
-                    true   // httpOnly (JavaScript cannot access)
+                    config('app.env') === 'production', // secure only in production
+                    true,  // httpOnly (JavaScript cannot access)
+                    false,
+                    'None' // Allow cross-site cookie sending
                 );
         }
 
@@ -60,6 +62,16 @@ class AuthController extends Controller
             'status' => true,
             'data' => "Logout successfully",
         ])
-            ->cookie('token', '', -1); // Clear the cookie
+            ->cookie(
+                'token',
+                '',
+                -1,
+                '/',
+                null,
+                config('app.env') === 'production',
+                true,
+                false,
+                'None'
+            );
     }
 }
