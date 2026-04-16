@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import api from '@/app/hooks/tokenHeader';
+import api, { setAuthToken } from '@/app/hooks/tokenHeader';
 import { AxiosError } from 'axios';
 import type { LoginCredentials, LoginResponse, UseLoginReturn } from '@/types/auth';
 import { BASEURL } from '@/config/api';
@@ -18,9 +18,8 @@ export function useLogin(): UseLoginReturn {
 
         try {
             const response = await api.post<LoginResponse>(`${BASEURL}/login`, credentials);
-            if (response.data.data.token) {
-                localStorage.setItem('token', response.data.data.token);
-                api.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+            if (response.data.data?.token) {
+                setAuthToken(response.data.data.token);
             }
             setData(response.data);
             return response.data;

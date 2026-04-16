@@ -31,11 +31,20 @@ class AuthController extends Controller
             $token = $user->createToken('token')->plainTextToken;
             return response()->json([
                 'status' => true,
-                'data' =>  [
+                'data' => [
                     'token' => $token,
                     'user' => $user,
                 ],
-            ], 200);
+            ], 200)
+                ->cookie(
+                    'token',
+                    $token,
+                    60 * 24, // 24 hours
+                    '/',
+                    null,
+                    true,  // secure (HTTPS only)
+                    true   // httpOnly (JavaScript cannot access)
+                );
         }
 
         return response()->json([
@@ -46,11 +55,11 @@ class AuthController extends Controller
 
     public function logout()
     {
-
         Auth::user()->currentAccessToken()->delete();
         return response()->json([
             'status' => true,
             'data' => "Logout successfully",
-        ]);
+        ])
+            ->cookie('token', '', -1); // Clear the cookie
     }
 }
