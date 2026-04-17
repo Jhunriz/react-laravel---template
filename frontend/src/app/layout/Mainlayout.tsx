@@ -17,7 +17,7 @@ export default function MainLayout() {
             <AppSidebar variant="inset" />
             <SidebarInset>
                 <SiteHeader />
-                <main>
+                <main className="p-5 h-auto">
                     <Outlet />
                 </main>
             </SidebarInset>

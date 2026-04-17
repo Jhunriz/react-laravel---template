@@ -5,6 +5,8 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import MainLayout from "../layout/Mainlayout";
 import Login from "../pages/auth/Login";
 import NotFound from "../layout/NotFound";
+import Setting from "../pages/setting/setting";
+import Account from "../pages/setting/account";
 
 export const router = createBrowserRouter([
     {
@@ -17,6 +19,18 @@ export const router = createBrowserRouter([
         children: [
             { index: true, element: <Dashboard /> },
         ],
+    },
+    {
+        path: "/setting",
+        element: (
+            <ProtectedRoute>
+                <MainLayout />
+            </ProtectedRoute>
+        ),
+        children: [
+            { index: true, element: <Setting /> },
+            { path: "account", element: <Account /> },
+        ]
     },
     {
         path: "/",

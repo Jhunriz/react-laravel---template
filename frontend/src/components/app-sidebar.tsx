@@ -13,7 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { LayoutDashboardIcon, ListIcon, ChartBarIcon, FolderIcon, UsersIcon, CameraIcon, FileTextIcon, Settings2Icon, CircleHelpIcon, SearchIcon, DatabaseIcon, FileChartColumnIcon, FileIcon, CommandIcon } from "lucide-react"
+import { LayoutDashboardIcon, CameraIcon, Settings2Icon, DatabaseIcon, CommandIcon } from "lucide-react"
 
 const data = {
   user: {
@@ -27,38 +27,6 @@ const data = {
       url: "#",
       icon: (
         <LayoutDashboardIcon
-        />
-      ),
-    },
-    {
-      title: "Lifecycle",
-      url: "#",
-      icon: (
-        <ListIcon
-        />
-      ),
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: (
-        <ChartBarIcon
-        />
-      ),
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: (
-        <FolderIcon
-        />
-      ),
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: (
-        <UsersIcon
         />
       ),
     },
@@ -83,42 +51,6 @@ const data = {
         },
       ],
     },
-    {
-      title: "Proposal",
-      icon: (
-        <FileTextIcon
-        />
-      ),
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: (
-        <FileTextIcon
-        />
-      ),
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
   ],
   navSecondary: [
     {
@@ -129,22 +61,6 @@ const data = {
         />
       ),
     },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: (
-        <CircleHelpIcon
-        />
-      ),
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: (
-        <SearchIcon
-        />
-      ),
-    },
   ],
   documents: [
     {
@@ -152,22 +68,6 @@ const data = {
       url: "#",
       icon: (
         <DatabaseIcon
-        />
-      ),
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: (
-        <FileChartColumnIcon
-        />
-      ),
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: (
-        <FileIcon
         />
       ),
     },
