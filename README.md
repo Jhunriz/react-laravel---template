@@ -31,6 +31,28 @@ A full-stack web application template featuring a React TypeScript frontend with
 - 🛠️ **Developer Tools**: ESLint, Prettier, PHPUnit for quality assurance
 - 🔄 **Concurrent Development**: Run both frontend and backend simultaneously
 
+## Quick Start
+
+For a fresh clone, run the automated setup script:
+
+```bash
+npm run setup
+```
+
+This will:
+- ✅ Check for required dependencies (PHP, Composer, Node.js, npm)
+- 📋 Create `.env` file from `.env.example`
+- 📦 Install backend dependencies with Composer
+- 🔑 Generate Laravel application key
+- 🗄️ Run database migrations
+- 🌱 Optionally seed the database
+- 📦 Install frontend dependencies with npm
+
+Then start development:
+```bash
+npm run dev
+```
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
@@ -40,7 +62,9 @@ Before you begin, ensure you have the following installed:
 - **Node.js 18+ and npm**
 - **MySQL or SQLite** (for database)
 
-## Installation
+## Manual Installation
+
+If you prefer manual setup or the automated script fails:
 
 1. **Clone the repository:**
    ```bash
@@ -109,6 +133,44 @@ Build the frontend for production:
 ```bash
 npm run build
 ```
+
+## Docker
+
+This project includes a Dockerfile for containerized development and deployment.
+
+### Prerequisites for Docker
+
+- **Docker** installed on your system
+- **Docker Compose** (optional, for multi-container setups)
+
+### Using Docker
+
+1. **Build the Docker image:**
+   ```bash
+   docker build -t react-laravel-template .
+   ```
+
+2. **Run the container:**
+   ```bash
+   docker run -p 8000:8000 -p 5173:5173 react-laravel-template
+   ```
+
+3. **Access the application:**
+   - Frontend dev server: `http://localhost:5173`
+   - Backend API: `http://localhost:8000`
+
+### Docker Development Workflow
+
+The Docker setup runs both frontend and backend development servers concurrently with hot reload enabled. For production deployment, you may want to:
+
+- Build the frontend statically
+- Use Nginx to serve the built frontend
+- Configure Apache/PHP-FPM for the Laravel backend
+- Add database containers (MySQL/PostgreSQL)
+
+### Environment Configuration
+
+When using Docker, ensure your `.env` file is properly configured for the container environment. You may need to adjust database host settings if using external database containers.
 
 ## API Documentation
 

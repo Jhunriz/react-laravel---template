@@ -2,14 +2,18 @@
   "name": "react-laravel-monorepo",
   "private": true,
   "scripts": {
+    "setup": "./setup.sh",
     "dev": "concurrently -n FRONTEND,BACKEND -c blue,green \"npm run dev:frontend\" \"npm run dev:backend\"",
 
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && php artisan serve --port=8000",
 
-    "build": "npm run build:frontend && php artisan build || true",
+    "build": "npm run build:frontend",
+    "build:frontend": "cd frontend && npm run build",
 
-    "build:frontend": "cd frontend && npm run build"
+    "docker:build": "docker build -t react-laravel-template .",
+    "docker:run": "docker run -p 8000:8000 -p 5173:5173 react-laravel-template",
+    "docker:dev": "npm run docker:build && npm run docker:run"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
