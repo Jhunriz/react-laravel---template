@@ -1,9 +1,4 @@
 import * as React from "react"
-
-import { NavDocuments } from "@/components/nav-documents"
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
@@ -14,7 +9,11 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { LayoutDashboardIcon, CameraIcon, Settings2Icon, DatabaseIcon, CommandIcon } from "lucide-react"
-import { useAppSelector } from "@/store/hooks"
+import { useAppSelector } from "@/app/store/hooks";
+import { NavMain } from "./nav-main";
+import { NavDocuments } from "./nav-documents";
+import { NavSecondary } from "./nav-secondary";
+import { NavUser } from "./nav-user";
 
 const data = {
   navMain: [

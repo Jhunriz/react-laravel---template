@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import AuthLayout from "../layout/AuthLayout";
-import Dashboard from "../pages/dashboard/Dashboard";
-import MainLayout from "../layout/Mainlayout";
-import Login from "../pages/auth/Login";
-import NotFound from "../layout/NotFound";
-import Setting from "../pages/setting/setting";
-import Account from "../pages/setting/account";
+import MainLayout from "@/components/layout/Mainlayout";
+import Setting from "@/pages/settings/Settings";
+import Account from "@/pages/settings/account";
+import AuthLayout from "@/components/layout/AuthLayout";
+import Login from "@/pages/auth/Login";
+import NotFound from "@/components/layout/NotFound";
+import Dashboard from "@/pages/dashboard/Dashboard";
 
 export const router = createBrowserRouter([
     {
