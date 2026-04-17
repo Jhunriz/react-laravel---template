@@ -26,7 +26,7 @@ import { useLogin } from "@/hooks/loginHook";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const loginSchema = z.object({
     email: z.string().min(1, "Email is required").email("Invalid email format"),
