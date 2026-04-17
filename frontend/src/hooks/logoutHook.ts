@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import api, { setAuthToken } from '@/app/hooks/tokenHeader';
+import api, { setAuthToken } from '@/hooks/tokenHeader';
 import { useNavigate } from 'react-router-dom';
 
 type UseLogoutReturn = {

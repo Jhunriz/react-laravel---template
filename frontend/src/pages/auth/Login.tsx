@@ -22,7 +22,7 @@ import {
 
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useLogin } from "@/app/hooks/loginHook";
+import { useLogin } from "@/hooks/loginHook";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

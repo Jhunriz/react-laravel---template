@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import api, { setAuthToken } from '@/app/hooks/tokenHeader';
+import api, { setAuthToken } from '@/hooks/tokenHeader';
 import { AxiosError } from 'axios';
 import type { LoginCredentials, LoginResponse, UseLoginReturn } from '@/types/auth';
 import { BASEURL } from '@/config/api';

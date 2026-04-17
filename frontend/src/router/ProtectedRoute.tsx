@@ -1,7 +1,7 @@
 import type { JSX } from "react";
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "@/app/hooks/tokenHeader";
+import api from "@/hooks/tokenHeader";
 
 type Props = {
     children: JSX.Element;

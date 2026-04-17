@@ -19,7 +19,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { EllipsisVerticalIcon, CircleUserRoundIcon, CreditCardIcon, BellIcon, LogOutIcon } from "lucide-react"
-import { useLogout } from "@/app/hooks/logoutHook"
+import { useLogout } from "@/hooks/logoutHook"
 
 export function NavUser({
   user,
