@@ -13,12 +13,12 @@ export function useLogout(): UseLogoutReturn {
         try {
             await api.post('/logout');
             setAuthToken(null);
-            navigate('/login', { replace: true });
+            navigate('/', { replace: true });
         } catch (error) {
             console.error('Logout failed:', error);
 
             setAuthToken(null);
-            navigate('/login', { replace: true });
+            navigate('/', { replace: true });
         }
     }, [navigate]);
 
