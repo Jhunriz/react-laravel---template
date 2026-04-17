@@ -4,13 +4,14 @@ export interface LoginCredentials {
 }
 
 export interface LoginResponse {
-    data: any;
-    token: string;
-    user: {
-        id: string;
-        email: string;
-        name?: string;
-        role?: string;
+    data: {
+        token: string;
+        user: {
+            id: string;
+            email: string;
+            name?: string;
+            role?: string;
+        };
     };
     message?: string;
 }
