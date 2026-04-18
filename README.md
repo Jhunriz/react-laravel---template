@@ -38,7 +38,7 @@ For a fresh clone, run the automated setup script: NOTE check the directory loca
 
 ```bash
 npm i
-setup.sh
+./setup.sh
 ```
 
 This will:
