@@ -33,6 +33,12 @@ A full-stack web application template featuring a React TypeScript frontend with
 
 ## Quick Start
 
+
+```bash
+ npm i
+./setup.sh
+```
+
 For a fresh clone, run the automated setup script:
 
 ```bash
