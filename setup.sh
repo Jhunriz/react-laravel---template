@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e  # 🔥 stop script immediately on error
+
 echo "🚀 Setting up React Laravel Template..."
 echo "========================================"
 
@@ -11,9 +13,64 @@ command -v npm >/dev/null 2>&1 || { echo "❌ npm is not installed. Please insta
 
 echo "✅ Required tools are installed"
 
+# =========================
+# Frontend setup (FIRST)
+# =========================
+echo "📦 Setting up React frontend..."
+
+pushd frontend > /dev/null || { echo "❌ frontend folder not found"; exit 1; }
+
+echo "📦 Installing npm dependencies..."
+
+# Clean install (prevents vite issues)
+rm -rf node_modules package-lock.json
+
+# Install with verbose error handling
+if ! npm install; then
+    echo "❌ npm install failed"
+    popd > /dev/null
+    exit 1
+fi
+
+# Validate that node_modules was actually created
+if [ ! -d "node_modules" ]; then
+    echo "❌ node_modules directory was not created"
+    popd > /dev/null
+    exit 1
+fi
+
+# Count installed packages to verify installation worked
+PACKAGE_COUNT=$(find node_modules -maxdepth 1 -type d | wc -l)
+if [ "$PACKAGE_COUNT" -lt 10 ]; then
+    echo "❌ Very few packages installed (found $PACKAGE_COUNT). Installation may have failed."
+    popd > /dev/null
+    exit 1
+fi
+
+# Validate Vite exists
+if [ ! -f "node_modules/.bin/vite" ] && [ ! -f "node_modules/vite/bin/vite.js" ]; then
+    echo "❌ Vite is not installed properly"
+    popd > /dev/null
+    exit 1
+fi
+
+# Test vite (important for Windows)
+if ! npx vite --version > /dev/null 2>&1; then
+    echo "❌ Vite is not working"
+    popd > /dev/null
+    exit 1
+fi
+
+echo "✅ Frontend dependencies installed (found $PACKAGE_COUNT packages)"
+
+popd > /dev/null
+
+# =========================
 # Backend setup
+# =========================
 echo "📦 Setting up Laravel backend..."
-cd backend
+
+pushd backend > /dev/null || { echo "❌ backend folder not found"; exit 1; }
 
 if [ ! -f ".env" ]; then
     echo "📋 Creating .env file..."
@@ -24,55 +81,57 @@ else
 fi
 
 echo "📦 Installing Composer dependencies..."
-composer install
+
+composer clear-cache
+COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist --optimize-autoloader
+
+if [ ! -f "vendor/autoload.php" ]; then
+    echo "❌ Composer failed: vendor/autoload.php missing"
+    popd > /dev/null
+    exit 1
+fi
+
+echo "✅ Composer dependencies installed"
 
 echo "🔑 Generating application key..."
 php artisan key:generate
 
 echo "🗄️  Setting up database..."
-# Check if database is configured
-DB_CONNECTION=$(grep "^DB_CONNECTION=" .env | cut -d '=' -f2)
-if [ "$DB_CONNECTION" = "sqlite" ]; then
-    # Create SQLite database if it doesn't exist
-    DB_DATABASE=$(grep "^DB_DATABASE=" .env | cut -d '=' -f2)
-    if [ ! -f "$DB_DATABASE" ]; then
-        touch "$DB_DATABASE"
-        echo "✅ SQLite database created at $DB_DATABASE"
-    fi
+
+DB_CONNECTION=$(grep "^DB_CONNECTION=" .env | cut -d '=' -f2 | tr -d '\r')
+
+if [ "$DB_CONNECTION" = "mysql" ]; then
+    echo "ℹ️  Using MySQL database"
+    echo "   Make sure MySQL is running on localhost:3306"
+    echo "   Database: laravel"
+    echo "   Username: root"
+    echo "   Password: (empty or check .env)"
 fi
 
 echo "🗄️  Running migrations..."
 php artisan migrate
 
-echo "🌱 Seeding database (optional)..."
-read -p "Do you want to seed the database with sample data? (y/N): " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    php artisan db:seed
-    echo "✅ Database seeded"
-else
-    echo "ℹ️  Skipping database seeding"
-fi
+# echo "🌱 Seeding database (optional)..."
+# read -p "Do you want to seed the database with sample data? (y/N): " -n 1 -r
+# echo
+# 
+# if [[ $REPLY =~ ^[Yy]$ ]]; then
+#     php artisan db:seed
+#     echo "✅ Database seeded"
+# else
+#     echo "ℹ️  Skipping database seeding"
+# fi
 
-cd ..
+popd > /dev/null
 
-# Frontend setup
-echo "📦 Setting up React frontend..."
-cd frontend
-
-echo "📦 Installing npm dependencies..."
-npm install
-
-cd ..
-
+# =========================
+# Done
+# =========================
 echo ""
 echo "🎉 Setup complete!"
 echo "=================="
 echo "To start development servers, run:"
 echo "  npm run dev"
 echo ""
-echo "Or use Docker:"
-echo "  npm run docker:dev"
-echo ""
-echo "Frontend will be available at: http://localhost:5173"
-echo "Backend API will be available at: http://localhost:8000"
+echo "Frontend: http://localhost:5173"
+echo "Backend:  http://localhost:8000"
