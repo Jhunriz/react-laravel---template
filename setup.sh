@@ -18,7 +18,7 @@ echo "✅ Required tools are installed"
 # =========================
 echo "📦 Setting up Laravel backend..."
 
-cd backend || { echo "❌ backend folder not found"; exit 1; }
+pushd backend > /dev/null || { echo "❌ backend folder not found"; exit 1; }
 
 if [ ! -f ".env" ]; then
     echo "📋 Creating .env file..."
@@ -35,6 +35,7 @@ COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist --optim
 
 if [ ! -f "vendor/autoload.php" ]; then
     echo "❌ Composer failed: vendor/autoload.php missing"
+    popd > /dev/null
     exit 1
 fi
 
@@ -70,14 +71,14 @@ else
     echo "ℹ️  Skipping database seeding"
 fi
 
-cd ..
+popd > /dev/null
 
 # =========================
 # Frontend setup (FIXED)
 # =========================
 echo "📦 Setting up React frontend..."
 
-cd frontend || { echo "❌ frontend folder not found"; exit 1; }
+pushd frontend > /dev/null || { echo "❌ frontend folder not found"; exit 1; }
 
 echo "📦 Installing npm dependencies..."
 
@@ -89,15 +90,16 @@ npm install
 # Validate Vite exists
 if [ ! -f "node_modules/.bin/vite" ] && [ ! -f "node_modules/vite/bin/vite.js" ]; then
     echo "❌ Vite is not installed properly"
+    popd > /dev/null
     exit 1
 fi
 
 # Test vite (important for Windows)
-npx vite --version || { echo "❌ Vite is not working"; exit 1; }
+npx vite --version || { echo "❌ Vite is not working"; popd > /dev/null; exit 1; }
 
 echo "✅ Frontend dependencies installed"
 
-cd ..
+popd > /dev/null
 
 # =========================
 # Done
