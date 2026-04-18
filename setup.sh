@@ -60,16 +60,16 @@ fi
 echo "🗄️  Running migrations..."
 php artisan migrate
 
-echo "🌱 Seeding database (optional)..."
-read -p "Do you want to seed the database with sample data? (y/N): " -n 1 -r
-echo
-
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    php artisan db:seed
-    echo "✅ Database seeded"
-else
-    echo "ℹ️  Skipping database seeding"
-fi
+# echo "🌱 Seeding database (optional)..."
+# read -p "Do you want to seed the database with sample data? (y/N): " -n 1 -r
+# echo
+# 
+# if [[ $REPLY =~ ^[Yy]$ ]]; then
+#     php artisan db:seed
+#     echo "✅ Database seeded"
+# else
+#     echo "ℹ️  Skipping database seeding"
+# fi
 
 popd > /dev/null
 
