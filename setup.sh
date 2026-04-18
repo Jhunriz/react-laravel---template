@@ -63,6 +63,14 @@ fi
 
 echo "✅ Frontend dependencies installed (found $PACKAGE_COUNT packages)"
 
+if [ ! -f ".env" ]; then
+    echo "📋 Creating .env file..."
+    cp .env.example .env
+    echo "✅ .env file created"
+else
+    echo "ℹ️  .env file already exists"
+fi
+
 popd > /dev/null
 
 # =========================
