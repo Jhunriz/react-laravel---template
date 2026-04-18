@@ -30,13 +30,9 @@ fi
 
 echo "📦 Installing Composer dependencies..."
 
-# Clear cache (helps on Windows issues)
 composer clear-cache
-
-# Install dependencies safely
 COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-dist --optimize-autoloader
 
-# Validate installation
 if [ ! -f "vendor/autoload.php" ]; then
     echo "❌ Composer failed: vendor/autoload.php missing"
     exit 1
@@ -49,7 +45,6 @@ php artisan key:generate
 
 echo "🗄️  Setting up database..."
 
-# Read DB connection safely
 DB_CONNECTION=$(grep "^DB_CONNECTION=" .env | cut -d '=' -f2 | tr -d '\r')
 
 if [ "$DB_CONNECTION" = "sqlite" ]; then
@@ -78,25 +73,40 @@ fi
 cd ..
 
 # =========================
-# Frontend setup
+# Frontend setup (FIXED)
 # =========================
 echo "📦 Setting up React frontend..."
 
 cd frontend || { echo "❌ frontend folder not found"; exit 1; }
 
 echo "📦 Installing npm dependencies..."
+
+# Clean install (prevents vite issues)
+rm -rf node_modules package-lock.json
+
 npm install
+
+# Validate Vite exists
+if [ ! -f "node_modules/.bin/vite" ] && [ ! -f "node_modules/vite/bin/vite.js" ]; then
+    echo "❌ Vite is not installed properly"
+    exit 1
+fi
+
+# Test vite (important for Windows)
+npx vite --version || { echo "❌ Vite is not working"; exit 1; }
+
+echo "✅ Frontend dependencies installed"
 
 cd ..
 
+# =========================
+# Done
+# =========================
 echo ""
 echo "🎉 Setup complete!"
 echo "=================="
 echo "To start development servers, run:"
 echo "  npm run dev"
 echo ""
-echo "Or use Docker:"
-echo "  npm run docker:dev"
-echo ""
-echo "Frontend will be available at: http://localhost:5173"
-echo "Backend API will be available at: http://localhost:8000"
+echo "Frontend: http://localhost:5173"
+echo "Backend:  http://localhost:8000"
