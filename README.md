@@ -37,8 +37,8 @@ A full-stack web application template featuring a React TypeScript frontend with
 For a fresh clone, run the automated setup script: NOTE check the directory located the ./setup.sh
 
 ```bash
- npm i
-./setup.sh
+npm i
+setup.sh
 ```
 
 This will:
