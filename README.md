@@ -34,12 +34,7 @@ A full-stack web application template featuring a React TypeScript frontend with
 ## Quick Start
 
 
-```bash
- npm i
-./setup.sh
-```
-
-For a fresh clone, run the automated setup script:
+For a fresh clone, run the automated setup script: NOTE check the directory located the ./setup.sh
 
 ```bash
  npm i
